@@ -58,14 +58,53 @@ type SetResponse = {
   results: { set_num: LegoSet["set_num"]; name: LegoSet["name"] }[];
 };
 
-export const getSets = async (themeId: number) => {
-  const data = await http<SetResponse>(`${baseUrl}/sets/?theme_id=${themeId}`);
+export const getSets = async () => {
+  const data = await http<SetResponse>(`${baseUrl}/sets/?theme_id=171`);
 
-  return data.results.map((set) => ({ set_num: set.set_num, name: set.name }));
+  return data.results
+    .map((set) => ({ set_num: set.set_num, name: set.name }))
+    .sort((a, b) => (a.name > b.name ? 1 : -1));
 };
 
 export const getSet = async (setNum: string) => {
   const data = await http<LegoSet>(`${baseUrl}/sets/${setNum}`);
 
+  if (data.hasOwnProperty("detail")) {
+    return null;
+  }
+
   return data;
+};
+
+export type LegoPart = {
+  id: number;
+  inv_part_id: number;
+  part: {
+    part_num: string;
+    name: string;
+    part_cat_id: number;
+    part_url: string;
+    part_img_url: string;
+  };
+  color: {
+    id: number;
+    name: string;
+    rgb: string;
+    is_trans: boolean;
+  };
+  set_num: string;
+  quantity: number;
+  is_spare: boolean;
+  element_id: string;
+  num_sets: number;
+};
+
+type PartsResponse = {
+  results: LegoPart[];
+};
+
+export const getParts = async (setNum: string) => {
+  const data = await http<PartsResponse>(`${baseUrl}/sets/${setNum}/parts`);
+
+  return data.results;
 };

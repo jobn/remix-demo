@@ -6,5 +6,6 @@ module.exports = {
   plugins: ["prettier"],
   rules: {
     "prettier/prettier": "error",
+    "@typescript-eslint/consistent-type-imports": "off",
   },
 };
