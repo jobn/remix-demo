@@ -17,15 +17,18 @@ export default function Posts() {
   const { sets } = useLoaderData<LoaderData>();
 
   return (
-    <>
+    <div className="flex flex-grow overflow-hidden">
       <div className="w-64 flex-shrink-0 overflow-y-scroll p-4">
-        <ul className="">
+        <ul className="divide-y divide-gray-200">
           {sets.map((set) => (
-            <li key={set.set_num}>
+            <li
+              key={set.set_num}
+              className="relative bg-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 hover:bg-gray-50"
+            >
               <NavLink
                 to={set.set_num.toString()}
                 className={({ isActive }) =>
-                  isActive ? "font-bold" : undefined
+                  `block py-5 px-4 ${isActive ? "font-bold" : ""}`
                 }
               >
                 {set.name}
@@ -35,7 +38,9 @@ export default function Posts() {
         </ul>
       </div>
 
-      <Outlet />
-    </>
+      <div className="flex-grow overflow-y-auto bg-slate-200 p-10">
+        <Outlet />
+      </div>
+    </div>
   );
 }
