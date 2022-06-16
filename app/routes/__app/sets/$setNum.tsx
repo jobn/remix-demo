@@ -27,7 +27,7 @@ export default function SetView() {
       <div className="relative flex w-full items-center overflow-hidden bg-white px-4 pt-14 pb-8 shadow-xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
         <div className="grid w-full grid-cols-1 items-start gap-y-8 gap-x-6 sm:grid-cols-12 lg:gap-x-8">
           <div className="sm:col-span-8 lg:col-span-7">
-            <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-100">
+            <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg">
               <img
                 src={set.set_img_url}
                 alt={set.name}
