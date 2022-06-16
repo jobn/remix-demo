@@ -1,5 +1,4 @@
 import type { LoaderFunction } from "@remix-run/node";
-import { json } from "@remix-run/node";
 import { NavLink, Outlet, useLoaderData } from "@remix-run/react";
 import { getSets } from "~/api";
 
@@ -10,10 +9,10 @@ type LoaderData = {
 export const loader: LoaderFunction = async ({ request, params }) => {
   const sets = await getSets();
 
-  return json<LoaderData>({ sets });
+  return { sets };
 };
 
-export default function Posts() {
+export default function Sets() {
   const { sets } = useLoaderData<LoaderData>();
 
   return (
