@@ -1,5 +1,5 @@
 import { Collection } from "@prisma/client";
-import { json, LoaderFunction } from "@remix-run/node";
+import { LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { db } from "~/db.server";
 
@@ -18,7 +18,7 @@ export const loader: LoaderFunction = async ({ params }) => {
     });
   }
 
-  return json<LoaderData>({ collection });
+  return { collection };
 };
 
 export default function CollectionsIndex() {

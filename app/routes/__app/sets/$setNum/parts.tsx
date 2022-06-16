@@ -1,5 +1,5 @@
 import { Dialog } from "@headlessui/react";
-import { json, LoaderFunction } from "@remix-run/node";
+import { LoaderFunction } from "@remix-run/node";
 import { useLoaderData, useNavigate, useParams } from "@remix-run/react";
 import { getParts, LegoPart } from "~/api";
 
@@ -14,7 +14,7 @@ export const loader: LoaderFunction = async ({ params }) => {
     throw new Response("No parts found for set", { status: 404 });
   }
 
-  return json<LoaderData>({ parts });
+  return { parts };
 };
 
 export default function PartsView() {

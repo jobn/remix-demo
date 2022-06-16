@@ -1,5 +1,4 @@
 import type { LoaderFunction } from "@remix-run/node";
-import { json } from "@remix-run/node";
 import { Link, Outlet, useLoaderData } from "@remix-run/react";
 import { LegoSet, getSet } from "~/api";
 
@@ -16,7 +15,7 @@ export const loader: LoaderFunction = async ({ params }) => {
     });
   }
 
-  return json({ set });
+  return { set };
 };
 
 export default function SetView() {
