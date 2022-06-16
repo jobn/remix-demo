@@ -1,30 +1,21 @@
+import { Collection } from "@prisma/client";
 import { json, LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import {
-  Collection,
-  getCollection,
-  getCollections,
-} from "~/models/collections";
+import { db } from "~/db.server";
 
 type LoaderData = {
   collection: Collection;
 };
 
 export const loader: LoaderFunction = async ({ params }) => {
-  if (!params.id) {
-    throw new Error("Invalid id");
-  }
-
-  const id = parseInt(params.id);
-
-  if (isNaN(id)) {
-    throw new Error("Invalid id");
-  }
-
-  const collection = await getCollection(id);
+  const collection = await db.collection.findFirst({
+    where: { id: params.id },
+  });
 
   if (!collection) {
-    throw new Error("Collection not found");
+    throw new Response("Not Found", {
+      status: 404,
+    });
   }
 
   return json<LoaderData>({ collection });

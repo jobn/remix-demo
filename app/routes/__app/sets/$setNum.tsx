@@ -8,14 +8,12 @@ type LoaderData = {
 };
 
 export const loader: LoaderFunction = async ({ params }) => {
-  if (!params.setNum) {
-    throw new Error("Not Found");
-  }
-
   const set = await getSet(params.setNum);
 
   if (!set) {
-    throw new Error("Not Found");
+    throw new Response("Not Found", {
+      status: 404,
+    });
   }
 
   return json({ set });

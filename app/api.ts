@@ -66,7 +66,9 @@ export const getSets = async () => {
     .sort((a, b) => (a.name > b.name ? 1 : -1));
 };
 
-export const getSet = async (setNum: string) => {
+export const getSet = async (setNum?: string) => {
+  if (!setNum) return Promise.resolve();
+
   const data = await http<LegoSet>(`${baseUrl}/sets/${setNum}`);
 
   if (data.hasOwnProperty("detail")) {
@@ -103,7 +105,8 @@ type PartsResponse = {
   results: LegoPart[];
 };
 
-export const getParts = async (setNum: string) => {
+export const getParts = async (setNum?: string) => {
+  if (!setNum) return Promise.resolve();
   const data = await http<PartsResponse>(`${baseUrl}/sets/${setNum}/parts`);
 
   return data.results;
