@@ -5,6 +5,7 @@ import {
   Form,
   NavLink,
   Outlet,
+  useActionData,
   useLoaderData,
   useTransition,
 } from "@remix-run/react";
@@ -13,6 +14,10 @@ import { db } from "~/db.server";
 
 type LoaderData = {
   collections: Collection[];
+};
+
+type ActionData = {
+  error: string;
 };
 
 export const loader: LoaderFunction = async () => {
@@ -26,7 +31,7 @@ export const action: ActionFunction = async ({ request }) => {
   const name = formData.get("name");
 
   if (typeof name !== "string" || name.length === 0) {
-    throw new Response("Name missing", { status: 422 });
+    return { error: "Name missing" };
   }
 
   await db.collection.create({ data: { name } });
@@ -36,6 +41,7 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function Collections() {
   const { collections } = useLoaderData<LoaderData>();
+  const actionData = useActionData<ActionData | undefined>();
   const transition = useTransition();
 
   const isSubmitting = transition.state === "submitting";
@@ -83,6 +89,8 @@ export default function Collections() {
                 id="name"
                 className="block w-full rounded-md border-2 border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
               />
+
+              {actionData?.error ? <p>{actionData.error}</p> : null}
             </div>
 
             <button
