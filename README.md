@@ -7,6 +7,10 @@
 From your terminal:
 
 ```sh
+npm i
+npm run generate:css
+npm exec prisma generate
+npm exec prisma migrate dev
 npm run dev
 ```
 
