@@ -1,7 +1,7 @@
 import { Dialog } from "@headlessui/react";
 import { LoaderFunction } from "@remix-run/node";
 import { useLoaderData, useNavigate, useParams } from "@remix-run/react";
-import { getParts, LegoPart } from "~/api";
+import { getParts, LegoPart } from "~/api.server";
 
 type LoaderData = {
   parts: LegoPart[];

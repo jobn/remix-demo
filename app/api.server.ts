@@ -1,4 +1,4 @@
-const apiKey = "95d8f686cfd96762d16661101019cbd7";
+const apiKey = process.env.API_KEY;
 
 const baseUrl = "https://rebrickable.com/api/v3/lego/";
 

@@ -1,6 +1,6 @@
 import type { LoaderFunction } from "@remix-run/node";
-import { Link, Outlet, useLoaderData } from "@remix-run/react";
-import { LegoSet, getSet } from "~/api";
+import { Link, Outlet, useCatch, useLoaderData } from "@remix-run/react";
+import { LegoSet, getSet } from "~/api.server";
 
 type LoaderData = {
   set: LegoSet;
@@ -10,12 +10,17 @@ export const loader: LoaderFunction = async ({ params }) => {
   const set = await getSet(params.setNum);
 
   if (!set) {
-    throw new Response("Not Found", {
+    throw new Response("Set Not Found", {
       status: 404,
     });
   }
 
   return { set };
+};
+
+export const CatchBoundary = () => {
+  const caught = useCatch();
+  return <div>We caught the error {JSON.stringify(caught)}</div>;
 };
 
 export default function SetView() {

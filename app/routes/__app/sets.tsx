@@ -1,6 +1,6 @@
 import type { LoaderFunction } from "@remix-run/node";
 import { NavLink, Outlet, useLoaderData } from "@remix-run/react";
-import { getSets } from "~/api";
+import { getSets } from "~/api.server";
 
 type LoaderData = {
   sets: { set_num: string; name: string }[];
