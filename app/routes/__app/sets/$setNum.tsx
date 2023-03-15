@@ -1,12 +1,8 @@
-import type { LoaderFunction } from "@remix-run/node";
+import type { LoaderArgs } from "@remix-run/node";
 import { Link, Outlet, useCatch, useLoaderData } from "@remix-run/react";
-import { LegoSet, getSet } from "~/api.server";
+import { getSet } from "~/api.server";
 
-type LoaderData = {
-  set: LegoSet;
-};
-
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader = async ({ params }: LoaderArgs) => {
   const set = await getSet(params.setNum);
 
   if (!set) {
@@ -24,7 +20,7 @@ export const CatchBoundary = () => {
 };
 
 export default function SetView() {
-  const { set } = useLoaderData<LoaderData>();
+  const { set } = useLoaderData<typeof loader>();
 
   return (
     <>

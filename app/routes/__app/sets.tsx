@@ -1,19 +1,15 @@
-import type { LoaderFunction } from "@remix-run/node";
+import { LoaderArgs } from "@remix-run/node";
 import { NavLink, Outlet, useLoaderData } from "@remix-run/react";
 import { getSets } from "~/api.server";
 
-type LoaderData = {
-  sets: { set_num: string; name: string }[];
-};
-
-export const loader: LoaderFunction = async ({ request, params }) => {
+export const loader = async ({ request, params }: LoaderArgs) => {
   const sets = await getSets();
 
   return { sets };
 };
 
 export default function Sets() {
-  const { sets } = useLoaderData<LoaderData>();
+  const { sets } = useLoaderData<typeof loader>();
 
   return (
     <div className="flex flex-grow overflow-hidden">

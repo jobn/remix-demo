@@ -1,5 +1,4 @@
-import { Collection } from "@prisma/client";
-import type { ActionFunction, LoaderFunction } from "@remix-run/node";
+import type { ActionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import {
   Form,
@@ -12,17 +11,13 @@ import {
 import { useEffect, useRef } from "react";
 import { db } from "~/db.server";
 
-type LoaderData = {
-  collections: Collection[];
-};
-
-export const loader: LoaderFunction = async () => {
+export const loader = async () => {
   const collections = await db.collection.findMany();
 
-  return json<LoaderData>({ collections });
+  return json({ collections });
 };
 
-export const action: ActionFunction = async ({ request }) => {
+export const action = async ({ request }: ActionArgs) => {
   const formData = await request.formData();
   const name = formData.get("name");
 
@@ -36,7 +31,7 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 export default function Collections() {
-  const { collections } = useLoaderData<LoaderData>();
+  const { collections } = useLoaderData<typeof loader>();
   const action = useActionData();
   const transition = useTransition();
 

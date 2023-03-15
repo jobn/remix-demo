@@ -1,13 +1,9 @@
 import { Dialog } from "@headlessui/react";
-import { LoaderFunction } from "@remix-run/node";
+import { LoaderArgs } from "@remix-run/node";
 import { useLoaderData, useNavigate, useParams } from "@remix-run/react";
-import { getParts, LegoPart } from "~/api.server";
+import { getParts } from "~/api.server";
 
-type LoaderData = {
-  parts: LegoPart[];
-};
-
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader = async ({ params }: LoaderArgs) => {
   const parts = await getParts(params.setNum);
 
   if (!parts || parts.length === 0) {
@@ -18,7 +14,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 };
 
 export default function PartsView() {
-  const { parts } = useLoaderData<LoaderData>();
+  const { parts } = useLoaderData<typeof loader>();
   const navigate = useNavigate();
   const params = useParams();
 

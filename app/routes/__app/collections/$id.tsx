@@ -1,13 +1,8 @@
-import { Collection } from "@prisma/client";
-import { LoaderFunction } from "@remix-run/node";
+import { LoaderArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { db } from "~/db.server";
 
-type LoaderData = {
-  collection: Collection;
-};
-
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader = async ({ params }: LoaderArgs) => {
   const collection = await db.collection.findFirst({
     where: { id: params.id },
   });
@@ -22,7 +17,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 };
 
 export default function CollectionsIndex() {
-  const { collection } = useLoaderData<LoaderData>();
+  const { collection } = useLoaderData<typeof loader>();
 
   return (
     <div>
