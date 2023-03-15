@@ -6,7 +6,7 @@ import {
   Outlet,
   useActionData,
   useLoaderData,
-  useTransition,
+  useNavigation,
 } from "@remix-run/react";
 import { useEffect, useRef } from "react";
 import { db } from "~/db.server";
@@ -33,9 +33,9 @@ export const action = async ({ request }: ActionArgs) => {
 export default function Collections() {
   const { collections } = useLoaderData<typeof loader>();
   const action = useActionData();
-  const transition = useTransition();
+  const navigation = useNavigation();
 
-  const isSubmitting = transition.state === "submitting";
+  const isSubmitting = navigation.state === "submitting";
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
@@ -86,7 +86,7 @@ export default function Collections() {
 
             <button
               type="submit"
-              className="inline-flex items-center rounded-md border border-transparent bg-indigo-100 px-4 py-2 text-sm font-medium text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              className="mt-2 inline-flex items-center rounded-md border border-transparent bg-indigo-100 px-4 py-2 text-sm font-medium text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
               Submit
             </button>
